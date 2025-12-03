@@ -10,7 +10,7 @@ import (
 )
 
 func Day02() {
-	fmt.Println("Day 2")
+	fmt.Println("Day 02")
 
 	f, err := os.Open("inputs/day02_input.txt")
 	if(err != nil) {
