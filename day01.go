@@ -8,7 +8,9 @@ import (
 	"strconv"
 )
 
-func main() {
+func Day01() {
+	fmt.Println("Day 01")
+
 	f, err := os.Open("inputs/day01_input.txt")
 	if err != nil {
 		panic(err)
@@ -16,11 +18,11 @@ func main() {
 	defer f.Close()
 
 	reader := bufio.NewReader(f)
-	calculate(50, reader)
+	calculateDay01(50, reader)
 }
 
-func calculate(start_pos int32, reader *bufio.Reader) {
-	var curr_pos, stopped_at_zero, passed_zero int32 = start_pos, 0, 0
+func calculateDay01(startPos int32, reader *bufio.Reader) {
+	var currPos, stoppedAtZero, passedZero int32 = startPos, 0, 0
 
 	for {
 		eof := false
@@ -38,38 +40,36 @@ func calculate(start_pos int32, reader *bufio.Reader) {
 			break
 		}
 
-		is_positive := line[0] == 'R'
+		isPositive := line[0] == 'R'
 
-		rotate_by, err := strconv.ParseInt(line[1:(len(line)-1)], 10, 32)
+		rotateBy, err := strconv.ParseInt(line[1:(len(line)-1)], 10, 32)
 		if err != nil {
 			panic(err)
 		}
 
-		fmt.Printf("Position: %d, IsPositive: %t, RotateBy: %d, PassedZero: %d, StoppedAtZero: %d\n", curr_pos, is_positive, rotate_by, passed_zero, stopped_at_zero)
+		passedZero += int32(rotateBy) / 100
 
-		passed_zero += int32(rotate_by) / 100
-
-		if is_positive {
-			curr_pos += int32(rotate_by) % 100
-			if curr_pos > 99 {
-				curr_pos = curr_pos - 100
-				passed_zero++
+		if isPositive {
+			currPos += int32(rotateBy) % 100
+			if currPos > 99 {
+				currPos = currPos - 100
+				passedZero++
 			}
 
 		} else {
-			prev_pos := curr_pos
-			curr_pos -= int32(rotate_by) % 100
-			if((curr_pos < 0 && prev_pos != 0) || curr_pos == 0) {
-				passed_zero++
+			prevPos := currPos
+			currPos -= int32(rotateBy) % 100
+			if((currPos < 0 && prevPos != 0) || currPos == 0) {
+				passedZero++
 			}
 
-			if curr_pos < 0 {
-				curr_pos = curr_pos + 100
+			if currPos < 0 {
+				currPos = currPos + 100
 			}
 		}
 
-		if curr_pos == 0 {
-			stopped_at_zero++
+		if currPos == 0 {
+			stoppedAtZero++
 		}
 
 		if eof {
@@ -77,9 +77,7 @@ func calculate(start_pos int32, reader *bufio.Reader) {
 		}
 	}
 
+	fmt.Printf("Part 1: %d\n", stoppedAtZero)
+	fmt.Printf("Part 2: %d \n", passedZero)
 	fmt.Println()
-	fmt.Println(stopped_at_zero)
-	fmt.Println()
-	fmt.Println(passed_zero)
-
 }
