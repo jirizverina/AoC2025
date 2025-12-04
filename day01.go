@@ -13,7 +13,8 @@ func Day01() {
 
 	f, err := os.Open("inputs/day01_input.txt")
 	if err != nil {
-		panic(err)
+		fmt.Println("Could not load input for day 01.")
+		return;
 	}
 	defer f.Close()
 

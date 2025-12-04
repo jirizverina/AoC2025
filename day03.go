@@ -12,9 +12,11 @@ func Day03() {
 	fmt.Println("\nDay 03")
 
 	f, err := os.Open("inputs/day03_input.txt")
-	if(err != nil) {
-		panic(err)
+	if err != nil {
+		fmt.Println("Could not load input for day 03.")
+		return;
 	}
+	defer f.Close()
 	
 	reader := bufio.NewReader(f)
 	_ = reader
