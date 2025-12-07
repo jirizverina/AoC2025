@@ -3,6 +3,7 @@ package main
 import (
 	"aoc2025/day05"
 	"aoc2025/day06"
+	"aoc2025/day07"
 )
 
 func main() {
@@ -12,5 +13,6 @@ func main() {
 	Day04()
 	day05.Solve()
 	day06.Solve()
+	day07.Solve()
 }
 
